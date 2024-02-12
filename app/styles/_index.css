@@ -1,0 +1,61 @@
+.backgroundBanner {
+    position: relative;
+    background-image: url('../assets/home/Back1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 650px;
+    flex: auto;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    /* Opacidad del 50% en negro */
+}
+
+.elevateText {
+    z-index: 1;
+    position: relative;
+}
+
+.titleLobby {
+    font-size: 58px;
+    line-height: 1.2;
+}
+
+.textPrincipal {
+    font-size: 140%;
+    line-height: 1.2;
+}
+
+.subTitlePrincipal {
+    font-size: 120%;
+    line-height: 1.2;
+    color: #BF0449;
+}
+
+.buttonPrincipal {
+    color: white;
+    background-color: #BF0449;
+    border-color: #BF0449;
+    font-size: 110%;
+    padding: 2% 3%;
+}
+
+.secondSpace {
+    background-color: #F3BBC6;
+}
+
+.centerTitles {
+    text-align: center;
+}
+
+.centerDivs {
+    text-align: center;
+    justify-content: center;
+}

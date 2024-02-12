@@ -1,0 +1,27 @@
+header {
+    background-color: #F0DAE4;
+    padding: 1% 0%;
+}
+.centerElements {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.centerLogo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
+ul {
+    text-align: center
+}
+
+li {
+    display: inline;
+    padding: 1%;
+}
+
+li:hover {
+    color: #BF0449;
+}
