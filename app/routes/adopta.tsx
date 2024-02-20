@@ -1,6 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 import { useEffect, useState } from "react";
-import styles from '~/styles/_header.css'
+import styles from '~/styles/_index.css'
 import type { LinksFunction } from "@remix-run/node";
 
 export const links: LinksFunction = () => {
@@ -11,14 +11,6 @@ export const links: LinksFunction = () => {
         }
     ]
 }
-
-export const meta: MetaFunction = () => {
-    return [
-        { title: "New Remix App" },
-        { name: "description", content: "Welcome to Remix!" },
-    ];
-};
-
 interface Animal {
     idPeludo: string;
     foto: string;
@@ -28,6 +20,7 @@ interface Animal {
 }
 
 export default function Adopta() {
+    const [data, setData] = useState(null);
     useEffect(() => {
         if (animals.length <= 0) {
             obtenerPeluditos()
@@ -48,6 +41,10 @@ export default function Adopta() {
 
     const obtenerPeluditos = async () => {
         try {
+            const response = await fetch('/api/data');
+            const result = await response.json();
+            console.log(result)
+            setData(result.data);
             // const res = await fetch(`${url.url}/api/adopcion`)
             // const data = await res.json();
             // console.log(data)

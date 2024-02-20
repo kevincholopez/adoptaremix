@@ -1,6 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
 import styles from '~/styles/_index.css'
 import type { LinksFunction } from "@remix-run/node";
+import CarouselComponent from '~/shared/components/carousel/carousel'
 
 export const links:LinksFunction = () => {
   return [
@@ -48,16 +49,16 @@ export default function Index() {
           <h2 className={`textPrincipal centerTitles pb-6`}>Este conmovedor video muestra el vínculo inquebrantable entre un dueño de mascota y su compañero amado, seguramente traerá lágrimas de alegría a los amantes de los animales en todas partes.</h2>
         </div>
       </div>
-      {/* <div className='grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-14 px-14 pb-16'>
-        <VideoComponent video='https://www.youtube.com/watch?v=os5_JhHE9go'></VideoComponent>
-        <VideoComponent video='https://www.youtube.com/watch?v=os5_JhHE9go'></VideoComponent>
-        <VideoComponent video='https://www.youtube.com/watch?v=os5_JhHE9go'></VideoComponent>
-      </div> */}
+      <div className='grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-14 px-14 pb-16'>
+        <video src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4" controls width={500} height={600}></video>
+        <video src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4" controls width={500} height={600}></video>
+        <video src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4" controls width={500} height={600}></video>
+      </div>
       <div className='secondSpace'>
         <h1 className={`titleLobby col-start-2 col-span-3 centerTitles p-10`}>Posibles mascotas en adopción para dueños de mascotas</h1>
       </div>
-      <div className=''>
-        {/* <CarouselComponent /> */}
+      <div className="h-96">
+        <CarouselComponent />
       </div>
     </main>
   );

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 .backgroundBanner {
     position: relative;
     background-image: url('../assets/home/Back1.jpg');
@@ -26,6 +29,10 @@
 .titleLobby {
     font-size: 58px;
     line-height: 1.2;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: italic;
 }
 
 .textPrincipal {
@@ -58,4 +65,11 @@
 .centerDivs {
     text-align: center;
     justify-content: center;
+}
+
+h2 {
+    font-family: "Loto", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
 }
