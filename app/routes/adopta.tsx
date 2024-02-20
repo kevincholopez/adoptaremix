@@ -2,6 +2,7 @@ import type { MetaFunction } from "@remix-run/node";
 import { useEffect, useState } from "react";
 import styles from '~/styles/_index.css'
 import type { LinksFunction } from "@remix-run/node";
+import {url} from '~/config/conection' 
 
 export const links: LinksFunction = () => {
     return [
@@ -32,7 +33,7 @@ export default function Adopta() {
     const [viewListGeneral, setViewListGeneral] = useState<boolean>(false);
 
     const listAnimals = animalsFilter.map((item, id) =>
-        <a onClick={() => asignarIdAnimal(item.idPeludo)} key={id} href={`/adopta/petSelected`} className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+        <a onClick={() => asignarIdAnimal(item.idPeludo)} key={id} href={`/petSelected?petSelected=${item.idPeludo}`} className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <img src={item.foto} alt="image" width={600} height={400}></img>
             <h1 className="text-center">{item.nombrePeludo}</h1>
             <h2 className="text-center">{item.edad} Años</h2>
@@ -41,17 +42,11 @@ export default function Adopta() {
 
     const obtenerPeluditos = async () => {
         try {
-            const response = await fetch('/api/data');
-            const result = await response.json();
-            console.log(result)
-            setData(result.data);
-            // const res = await fetch(`${url.url}/api/adopcion`)
-            // const data = await res.json();
-            // console.log(data)
-            // Assuming 'data' variable is declared somewhere
-            // setAnimals(data);
-            // setAnimalsFilter(data);
-
+            const res = await fetch(`${url.url}/api/EnAdopcion`)
+            const data = await res.json();
+            console.log(data)
+            setAnimals(data);
+            setAnimalsFilter(data);
         } catch (err) {
             console.log(err);
         }

@@ -1,15 +1,15 @@
 import Logo from "~/assets/header/logo.webp";
 import type { LinksFunction } from "@remix-run/node";
-import styles from "./style.css";
+import stylesFooter from "~/shared/components/footer/style.css";
 
 export const links: LinksFunction = () => {
     return [
         {
-            rel: "stylesheet",
-            href: styles,
-        },
-    ];
-};
+            rel: 'stylesheet',
+            href: stylesFooter
+        }
+    ]
+}
 
 
 export default function Header() {
