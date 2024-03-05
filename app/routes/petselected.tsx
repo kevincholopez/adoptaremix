@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import styles from '~/styles/_index.css'
 import type { LinksFunction } from "@remix-run/node";
 import { url } from '~/config/conection'
-import { useLocation } from "@remix-run/react"; 
+import { useLocation } from "@remix-run/react";
+import { Tabs } from 'flowbite-react';
 
 export const links: LinksFunction = () => {
     return [
@@ -15,10 +16,18 @@ export const links: LinksFunction = () => {
 
 interface Animal {
     idPeludo: string;
+    raza: String;
     foto: string;
     nombrePeludo: string;
     edad: number;
     categoria: string;
+    contacto: String;
+    sexo: String;
+    color: String;
+    tamano: String;
+    vacunado: String;
+    castrado: String;
+    historia: String;
 }
 
 export default function SeleccionPet() {
@@ -39,15 +48,50 @@ export default function SeleccionPet() {
     };
 
     useEffect(() => {
-        if (pet === undefined)  {
+        if (pet === undefined) {
             obtenerPeluditos()
         }
     })
 
     return (
         <main className="flex flex-col items-center justify-between p-12">
-            <h2>Peludito de Adopta: {pet?.nombrePeludo}</h2>
-            <img src={pet?.foto} alt="" />
-        </main>
+            <h3 className="subTitlePrincipal text-center px-6">Peludito de Adopta: </h3>
+            <h1 className="titleLobby centerTitles px-6 pb-10">{pet?.nombrePeludo} </h1>
+            <div className="lg:grid lg:grid-cols-2 lg:gap-2 elevateText">
+                <div className="col-start-1 flex justify-center">
+                    <img src={pet?.foto} alt="" width={500} height={500} />
+                </div>
+                <div className="col-start-2 w-screen">
+                    <Tabs className="" aria-label="Pills" style="pills">
+                        <Tabs.Item active title="Descripción">
+                            <p className="font-medium textPrincipal p-4">Edad:
+                                <span className="font-light px-6">{pet?.nombrePeludo}</span>
+                            </p>
+                            <p className="font-medium textPrincipal p-4">Raza:
+                                <span className="font-light px-6">{pet?.raza}</span>
+                            </p>
+                            <p className="font-medium textPrincipal p-4">Sexo:
+                                <span className="font-light px-6">{pet?.sexo}</span>
+                            </p>
+                            <p className="font-medium textPrincipal p-4">Color:
+                                <span className="font-light px-6">{pet?.color}</span>
+                            </p>
+                            <p className="font-medium textPrincipal p-4">Tamaño:
+                                <span className="font-light px-6">{pet?.tamano}</span>
+                            </p>
+                            <p className="font-medium textPrincipal p-4">Vacunado:
+                                <span className="font-light px-6">{pet?.vacunado}</span>
+                            </p>
+                            <p className="font-medium textPrincipal p-4">Castrado:
+                                <span className="font-light px-6">{pet?.castrado}</span>
+                            </p>
+                        </Tabs.Item>
+                        <Tabs.Item title="Historia">
+                            <p className="font-medium textPrincipal p-4">{pet?.historia}</p>
+                        </Tabs.Item>
+                    </Tabs>
+                </div>
+            </div>
+        </main >
     )
 }

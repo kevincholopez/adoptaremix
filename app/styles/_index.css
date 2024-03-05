@@ -73,3 +73,11 @@ h2 {
     font-weight: 300;
     font-style: normal;
 }
+
+.footerDivs{
+    background-color: #F0DAE4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

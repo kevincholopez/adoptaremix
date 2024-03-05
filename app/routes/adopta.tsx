@@ -33,10 +33,12 @@ export default function Adopta() {
     const [viewListGeneral, setViewListGeneral] = useState<boolean>(false);
 
     const listAnimals = animalsFilter.map((item, id) =>
-        <a onClick={() => asignarIdAnimal(item.idPeludo)} key={id} href={`/petSelected?petSelected=${item.idPeludo}`} className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+        <a onClick={() => asignarIdAnimal(item.idPeludo)} key={id} href={`/petSelected?petSelected=${item.idPeludo}`} className="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <img src={item.foto} alt="image" width={600} height={400}></img>
-            <h1 className="text-center">{item.nombrePeludo}</h1>
-            <h2 className="text-center">{item.edad} Años</h2>
+            <div className="footerDivs">
+                <h1 className="titleLobby text-center">{item.nombrePeludo}</h1>
+                <h2 className="textPrincipal text-center">{item.edad} Años</h2>
+            </div>
         </a>
     );
 

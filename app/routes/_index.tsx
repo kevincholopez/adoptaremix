@@ -3,7 +3,7 @@ import styles from '~/styles/_index.css'
 import type { LinksFunction } from "@remix-run/node";
 import CarouselComponent from '~/shared/components/carousel/carousel'
 
-export const links:LinksFunction = () => {
+export const links: LinksFunction = () => {
   return [
     {
       rel: 'stylesheet',
@@ -20,6 +20,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
+
   return (
     <main>
       <div className='bg-repeat-x backgroundBanner'>
@@ -28,9 +29,11 @@ export default function Index() {
           <div className='lg:col-start-2 py-20 sm:centerDivs'>
             <h1 className={`titleLobby pb-6`}>Fundación Adopta la Plata Huila</h1>
             <h2 className={`textPrincipal py-6`}>Descubre nuestra misión y valores en Fundación Adopta la Plata Huila en La Plata, Huila, Colombia.</h2>
-            <button 
-              // onClick={async () => obtenerRegistro()} 
-              className={`buttonPrincipal`}>Conoce más</button>
+            <a href="/nosotros">
+              <button
+                // onClick={async () => envioSMS()}
+                className={`buttonPrincipal`}>Conoce más</button>
+            </a>
           </div>
         </div>
       </div>
