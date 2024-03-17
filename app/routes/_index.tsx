@@ -29,7 +29,7 @@ export default function Index() {
           <div className='lg:col-start-2 py-20 sm:centerDivs'>
             <h1 className={`titleLobby pb-6`}>Fundación Adopta la Plata Huila</h1>
             <h2 className={`textPrincipal py-6`}>Descubre nuestra misión y valores en Fundación Adopta la Plata Huila en La Plata, Huila, Colombia.</h2>
-            <a href="/nosotros">
+            <a className="buttonMore" href="/nosotros">
               <button
                 // onClick={async () => envioSMS()}
                 className={`buttonPrincipal`}>Conoce más</button>
