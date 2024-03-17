@@ -1080,10 +1080,6 @@ input:checked + .toggle-bg {
   position: relative;
 }
 
-.inset-0 {
-  inset: 0px;
-}
-
 .inset-y-0 {
   top: 0px;
   bottom: 0px;
@@ -1217,12 +1213,12 @@ input:checked + .toggle-bg {
   grid-column: span 3 / span 3;
 }
 
-.col-start-2 {
-  grid-column-start: 2;
-}
-
 .col-start-1 {
   grid-column-start: 1;
+}
+
+.col-start-2 {
+  grid-column-start: 2;
 }
 
 .-mx-1 {
@@ -1268,11 +1264,6 @@ input:checked + .toggle-bg {
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
-}
-
-.my-10 {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
 }
 
 .-mb-px {
@@ -1959,10 +1950,6 @@ input:checked + .toggle-bg {
 
 .rounded-none {
   border-radius: 0px;
-}
-
-.rounded-sm {
-  border-radius: 0.125rem;
 }
 
 .rounded-b {
@@ -2722,11 +2709,6 @@ input:checked + .toggle-bg {
      object-fit: cover;
 }
 
-.object-center {
-  -o-object-position: center;
-     object-position: center;
-}
-
 .p-0 {
   padding: 0px;
 }
@@ -2881,6 +2863,10 @@ input:checked + .toggle-bg {
   padding-bottom: 1.5rem;
 }
 
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
+
 .pb-16 {
   padding-bottom: 4rem;
 }
@@ -2965,10 +2951,6 @@ input:checked + .toggle-bg {
   padding-top: 1.25rem;
 }
 
-.pb-10 {
-  padding-bottom: 2.5rem;
-}
-
 .text-left {
   text-align: left;
 }
@@ -3011,6 +2993,10 @@ input:checked + .toggle-bg {
   font-weight: 700;
 }
 
+.font-light {
+  font-weight: 300;
+}
+
 .font-medium {
   font-weight: 500;
 }
@@ -3021,10 +3007,6 @@ input:checked + .toggle-bg {
 
 .font-semibold {
   font-weight: 600;
-}
-
-.font-light {
-  font-weight: 300;
 }
 
 .uppercase {
@@ -3665,10 +3647,6 @@ input:checked + .toggle-bg {
 
 .hover\:cursor-not-allowed:hover {
   cursor: not-allowed;
-}
-
-.hover\:list-disc:hover {
-  list-style-type: disc;
 }
 
 .hover\:border-gray-300:hover {
@@ -5726,20 +5704,12 @@ input:checked + .toggle-bg {
     margin-top: 0px;
   }
 
-  .md\:ml-10 {
-    margin-left: 2.5rem;
-  }
-
   .md\:block {
     display: block;
   }
 
   .md\:flex {
     display: flex;
-  }
-
-  .md\:inline-flex {
-    display: inline-flex;
   }
 
   .md\:hidden {
@@ -5845,10 +5815,6 @@ input:checked + .toggle-bg {
 @media (min-width: 1024px) {
   .lg\:col-start-2 {
     grid-column-start: 2;
-  }
-
-  .lg\:col-start-1 {
-    grid-column-start: 1;
   }
 
   .lg\:my-8 {
