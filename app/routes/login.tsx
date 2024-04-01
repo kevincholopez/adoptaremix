@@ -51,7 +51,8 @@ export default function login() {
     //     </a>
     // );
 
-    const sendForm = async () => {
+    const sendForm = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         setShowLoading(true)
         try {
             const res = await fetch(`${url.url}/api/login?identificacion=${user}&password=${pass}`)
@@ -110,7 +111,7 @@ export default function login() {
                 <h3 className={`subTitlePrincipal px-6`}>Fundación adopta la plata</h3>
                 <h1 className={`titleLobby px-6`}>inicia sesión</h1>
                 <br />
-                <form className="flex flex-col gap-4">
+                <form onSubmit={sendForm} className="flex flex-col gap-4">
                     <div>
                         <div className="mb-2 block">
                             <Label htmlFor="user" value="Documento" />
@@ -127,7 +128,7 @@ export default function login() {
                             <span className={`font-medium ${messagePassword ? '' : 'hidden'}`}>Contraseña incorrecta </span>
                         </>} color={colorPassword} onChange={(e) => setPassword(e.target.value)} value={pass} id="pass" type="password" placeholder="Ingrese la contraseña" required />
                     </div>
-                    <Button onClick={sendForm} className={`${showLoading ? 'hidden' : ''}`}>Inicia Sesión</Button>
+                    <Button type="submit" className={`${showLoading ? 'hidden' : ''}`}>Inicia Sesión</Button>
                     <Button className={`${showLoading ? '' : 'hidden'}`} color="gray">
                         <Spinner aria-label="Alternate spinner button example" size="sm" />
                         <span className="pl-3">Cargando...</span>

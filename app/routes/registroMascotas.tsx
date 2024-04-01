@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
-import { useEffect, useState } from "react";
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import styles from '~/styles/_index.css'
 import type { LinksFunction } from "@remix-run/node";
 import { Button, Checkbox, Label, TextInput, Select, Textarea, FileInput } from 'flowbite-react';
@@ -12,6 +12,11 @@ export const links: LinksFunction = () => {
             href: styles
         }
     ]
+}
+
+interface Picture {
+    data: File;
+    url: string;
 }
 
 // interface Animal {
@@ -28,15 +33,13 @@ export default function RegistroMascotas() {
     const [edad, setEdad] = useState(0);
     const [contacto, setContacto] = useState(0);
     const [tipoPeludito, setTipoPeludito] = useState('');
+    const [sexo, setSexo] = useState('');
     const [color, setColor] = useState('');
     const [tamano, setTamano] = useState('');
     const [vacunado, setVacunado] = useState('');
     const [castrado, setCastrado] = useState('');
     const [historia, setHistoria] = useState('');
-    const [pictures, setPictures] = useState([{
-        data: [],
-        url: ""
-    }])
+    const [pictures, setPictures] = useState<Picture[]>([]);
 
     useEffect(() => {
         // console.log(foto)
@@ -56,14 +59,16 @@ export default function RegistroMascotas() {
     //         console.log(err);
     //     }
     // };
-    const sendForm  = async () => {
+    const sendForm = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         try {
             const body = {
-                "name": name, 
+                "name": name,
                 "raza": raza,
                 "edad": edad,
                 "contacto": contacto,
                 "tipoPeludito": tipoPeludito,
+                "sexo": sexo,
                 "color": color,
                 "tamano": tamano,
                 "vacunado": vacunado,
@@ -71,7 +76,17 @@ export default function RegistroMascotas() {
                 "historia": historia,
                 "pictures": pictures
             }
-            const res = await fetch(`${url.url}/api/registroMascotas`, body)
+            console.log(body)
+            const settings = {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
+            };
+
+            const res = await fetch(`${url.url}/api/registroMascotas`, settings)
             const data = await res.json();
             console.log(data)
             // Assuming 'data' variable is declared somewhere
@@ -83,19 +98,24 @@ export default function RegistroMascotas() {
         }
     }
 
-    const handleImageUpload = (e) => {
-        const tempArr = [];
+    const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
 
-        [...e.target.files].forEach(file => {
-            console.log("file >>> ", file);
+        if (files) {
+            const tempArr: Picture[] = [];
 
-            tempArr.push({
-                data: file,
-                url: URL.createObjectURL(file)
+            [...files].forEach((file: File) => {
+                console.log("file >>> ", file);
+
+                tempArr.push({
+                    data: file,
+                    url: URL.createObjectURL(file)
+                });
             });
-        });
-        setPictures(tempArr);
-        console.log("pictures >> ", tempArr);
+
+            setPictures(tempArr);
+            console.log("pictures >> ", tempArr);
+        }
     };
 
     return (
@@ -104,7 +124,7 @@ export default function RegistroMascotas() {
                 <h3 className={`subTitlePrincipal px-6`}>!Hora de darle un hogar!</h3>
                 <h1 className={`titleLobby px-6`}>Registra a la mascota</h1>
                 <p className='text-center textPrincipal p-6'>Al registrarlo, quedara en la base de datos de la fundacion para poder hallar un hogar ideal para el.</p>
-                <form className="flex flex-col gap-4">
+                <form onSubmit={sendForm} className="flex flex-col gap-4">
                     <div>
                         <div className="mb-2 block">
                             <Label htmlFor="nombrePeludo" value="Nombre del peludito" />
@@ -121,21 +141,32 @@ export default function RegistroMascotas() {
                         <div className="mb-2 block">
                             <Label htmlFor="edad" value="Edad" />
                         </div>
-                        <TextInput onChange={(e) => setEdad(e.target.value)} value={edad} id="edad" type="number" placeholder="Edad" required />
+                        <TextInput onChange={(e) => setEdad(Number(e.target.value))} value={edad} id="edad" type="number" placeholder="Edad" required />
                     </div>
                     <div>
                         <div className="mb-2 block">
                             <Label htmlFor="contacto" value="Contacto" />
                         </div>
-                        <TextInput onChange={(e) => setContacto(e.target.value)} value={contacto} id="contacto" type="number" placeholder="Numbero de celular" required />
+                        <TextInput onChange={(e) => setContacto(Number(e.target.value))} value={contacto} id="contacto" type="number" placeholder="Numbero de celular" required />
                     </div>
                     <div>
                         <div className="mb-2 block">
                             <Label htmlFor="categoria" value="Tipo de peludito" />
                         </div>
                         <Select onChange={(e) => setTipoPeludito(e.target.value)} value={tipoPeludito} id="categoria" required>
-                            <option>Perro</option>
-                            <option>Gato</option>
+                            <option value="">Seleccione una opcion</option>
+                            <option value="Perro">Perro</option>
+                            <option value="Gato">Gato</option>
+                        </Select>
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
+                            <Label htmlFor="sexo" value="Sexo" />
+                        </div>
+                        <Select onChange={(e) => setSexo(e.target.value)} value={sexo} id="sexo" required>
+                            <option value="">Seleccione una opcion</option>
+                            <option value="Macho">Macho</option>
+                            <option value="Hembra">Hembra</option>
                         </Select>
                     </div>
                     <div>
@@ -149,9 +180,10 @@ export default function RegistroMascotas() {
                             <Label htmlFor="tamano" value="Tamaño" />
                         </div>
                         <Select onChange={(e) => setTamano(e.target.value)} value={tamano} id="tamano" required>
-                            <option>Grande</option>
-                            <option>Mediano</option>
-                            <option>Pequeño</option>
+                            <option value="">Seleccione una opcion</option>
+                            <option value="Grande">Grande</option>
+                            <option value="Mediano">Mediano</option>
+                            <option value="Pequeño">Pequeño</option>
                         </Select>
                     </div>
                     <div>
@@ -159,8 +191,9 @@ export default function RegistroMascotas() {
                             <Label htmlFor="vacunado" value="Vacunado" />
                         </div>
                         <Select onChange={(e) => setVacunado(e.target.value)} value={vacunado} id="vacunado" required>
-                            <option>Si</option>
-                            <option>No</option>
+                            <option value="">Seleccione una opcion</option>
+                            <option value="Si">Si</option>
+                            <option value="No">No</option>
                         </Select>
                     </div>
                     <div>
@@ -168,8 +201,9 @@ export default function RegistroMascotas() {
                             <Label htmlFor="castrado" value="Castrado" />
                         </div>
                         <Select onChange={(e) => setCastrado(e.target.value)} value={castrado} id="castrado" required>
-                            <option>Si</option>
-                            <option>No</option>
+                            <option value="">Seleccione una opcion</option>
+                            <option value="Si">Si</option>
+                            <option value="No">No</option>
                         </Select>
                     </div>
                     <div>
@@ -184,7 +218,7 @@ export default function RegistroMascotas() {
                         </div>
                         <FileInput onChange={handleImageUpload} id="foto" multiple />
                     </div>
-                    <Button onClick={() => sendForm}>Registrar peludito</Button>
+                    <Button type="submit">Registrar peludito</Button>
                 </form>
             </div>
         </main>
