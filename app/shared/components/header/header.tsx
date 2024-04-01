@@ -32,6 +32,7 @@ export default function Header() {
                 <Navbar.Link href="/nosotros">Sobre nosotros</Navbar.Link>
                 <Navbar.Link href="/adopta">Adopta</Navbar.Link>
                 <Navbar.Link href="/contactenos">Contactenos</Navbar.Link>
+                <Navbar.Link href="/login">Ingresar</Navbar.Link>
             </Navbar.Collapse>
         </Navbar>
     )

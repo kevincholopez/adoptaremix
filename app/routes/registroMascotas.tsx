@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styles from '~/styles/_index.css'
 import type { LinksFunction } from "@remix-run/node";
 import { Button, Checkbox, Label, TextInput, Select, Textarea, FileInput } from 'flowbite-react';
+import { url } from "~/config/conection";
 
 export const links: LinksFunction = () => {
     return [
@@ -55,11 +56,34 @@ export default function RegistroMascotas() {
     //         console.log(err);
     //     }
     // };
-    const sendForm = () => {
-        // console.log(foto)
+    const sendForm  = async () => {
+        try {
+            const body = {
+                "name": name, 
+                "raza": raza,
+                "edad": edad,
+                "contacto": contacto,
+                "tipoPeludito": tipoPeludito,
+                "color": color,
+                "tamano": tamano,
+                "vacunado": vacunado,
+                "castrado": castrado,
+                "historia": historia,
+                "pictures": pictures
+            }
+            const res = await fetch(`${url.url}/api/registroMascotas`, body)
+            const data = await res.json();
+            console.log(data)
+            // Assuming 'data' variable is declared somewhere
+            // setAnimals(data);
+            // setAnimalsFilter(data);
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
-    const handleImageUpload = e => {
+    const handleImageUpload = (e) => {
         const tempArr = [];
 
         [...e.target.files].forEach(file => {
@@ -69,11 +93,9 @@ export default function RegistroMascotas() {
                 data: file,
                 url: URL.createObjectURL(file)
             });
-
-            console.log("pictures >> ", pictures);
         });
-
         setPictures(tempArr);
+        console.log("pictures >> ", tempArr);
     };
 
     return (
@@ -82,7 +104,7 @@ export default function RegistroMascotas() {
                 <h3 className={`subTitlePrincipal px-6`}>!Hora de darle un hogar!</h3>
                 <h1 className={`titleLobby px-6`}>Registra a la mascota</h1>
                 <p className='text-center textPrincipal p-6'>Al registrarlo, quedara en la base de datos de la fundacion para poder hallar un hogar ideal para el.</p>
-                <form onSubmit={() => sendForm} className="flex flex-col gap-4">
+                <form className="flex flex-col gap-4">
                     <div>
                         <div className="mb-2 block">
                             <Label htmlFor="nombrePeludo" value="Nombre del peludito" />
@@ -162,7 +184,7 @@ export default function RegistroMascotas() {
                         </div>
                         <FileInput onChange={handleImageUpload} id="foto" multiple />
                     </div>
-                    <Button type="submit">Registrar peludito</Button>
+                    <Button onClick={() => sendForm}>Registrar peludito</Button>
                 </form>
             </div>
         </main>
