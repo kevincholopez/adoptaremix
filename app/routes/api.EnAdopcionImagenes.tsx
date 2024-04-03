@@ -7,7 +7,7 @@ export const loader: LoaderFunction = async ({params, request}) => {
     const petSelected = searchParams.get("petSelected");
     console.log(petSelected)
     try {
-        let sqlConsult = "SELECT * FROM EnAdopcion"
+        let sqlConsult = "SELECT imagen FROM imagenesEnAdopcion"
         if (petSelected != null) {
             sqlConsult = sqlConsult + ` WHERE idPeludo = ${petSelected}`
         }

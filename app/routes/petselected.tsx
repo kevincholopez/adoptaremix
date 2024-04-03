@@ -4,6 +4,7 @@ import type { LinksFunction } from "@remix-run/node";
 import { url } from '~/config/conection'
 import { useLocation } from "@remix-run/react";
 import { Tabs } from 'flowbite-react';
+import CarouselComponent from '~/shared/components/carousel/carousel'
 
 export const links: LinksFunction = () => {
     return [
@@ -30,8 +31,13 @@ interface Animal {
     historia: String;
 }
 
+interface AnimalImage {
+    imagen: string;
+}
+
 export default function SeleccionPet() {
     const [pet, setPet] = useState<Animal>();
+    const [petImages, setPetImages] = useState<AnimalImage[]>([]);
     const location = useLocation(); // Utiliza useLocation para obtener la ubicación actual
 
     // Extrae el valor del parámetro 'petSelected' de la ubicación actual
@@ -41,6 +47,9 @@ export default function SeleccionPet() {
         try {
             const res = await fetch(`${url.url}/api/EnAdopcion?petSelected=${petSelected}`)
             const data = await res.json();
+            const resImages = await fetch(`${url.url}/api/EnAdopcionImagenes?petSelected=${petSelected}`)
+            const dataImage = await resImages.json();
+            setPetImages(dataImage)
             setPet(data[0]);
         } catch (err) {
             console.log(err);
@@ -58,8 +67,8 @@ export default function SeleccionPet() {
             <h3 className="subTitlePrincipal text-center px-6">Peludito de Adopta: </h3>
             <h1 className="titleLobby centerTitles px-6 pb-10">{pet?.nombrePeludo} </h1>
             <div className="lg:grid lg:grid-cols-2 lg:gap-2 elevateText">
-                <div className="col-start-1 flex justify-center">
-                    <img src={pet?.foto} alt="" width={500} height={500} />
+                <div className="col-start-1 w-screen">
+                    <CarouselComponent listImages={petImages} />
                 </div>
                 <div className="col-start-2 w-screen">
                     <Tabs className="" aria-label="Pills" style="pills">

@@ -46,7 +46,6 @@ export default function Adopta() {
         try {
             const res = await fetch(`${url.url}/api/EnAdopcion`)
             const data = await res.json();
-            console.log(data)
             setAnimals(data);
             setAnimalsFilter(data);
         } catch (err) {

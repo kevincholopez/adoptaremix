@@ -1,9 +1,9 @@
-import type { MetaFunction } from "@remix-run/node";
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '~/styles/_index.css'
 import type { LinksFunction } from "@remix-run/node";
-import { Button, Checkbox, Label, TextInput, Select, Textarea, FileInput } from 'flowbite-react';
+import { Button, Checkbox, Label, TextInput, Select, Textarea, FileInput, Spinner } from 'flowbite-react';
 import { url } from "~/config/conection";
+import { uploadfile } from '~/config/firebase'
 
 export const links: LinksFunction = () => {
     return [
@@ -14,18 +14,9 @@ export const links: LinksFunction = () => {
     ]
 }
 
-interface Picture {
-    data: File;
-    url: string;
+interface PictureInterfaz {
+    images: File[]
 }
-
-// interface Animal {
-//     idPeludo: string;
-//     foto: string;
-//     nombrePeludo: string;
-//     edad: number;
-//     categoria: string;
-// }
 
 export default function RegistroMascotas() {
     const [name, setName] = useState('');
@@ -39,27 +30,14 @@ export default function RegistroMascotas() {
     const [vacunado, setVacunado] = useState('');
     const [castrado, setCastrado] = useState('');
     const [historia, setHistoria] = useState('');
-    const [pictures, setPictures] = useState<Picture[]>([]);
+    const [sendFormLoading, setSendFormLoading] = useState(false)
 
     useEffect(() => {
         // console.log(foto)
     })
 
-
-    // const obtenerPeluditos = async () => {
-    //     try {
-    //         // const res = await fetch(`${url.url}/api/adopcion`)
-    //         // const data = await res.json();
-    //         // console.log(data)
-    //         // Assuming 'data' variable is declared somewhere
-    //         // setAnimals(data);
-    //         // setAnimalsFilter(data);
-
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
     const sendForm = async (e: React.FormEvent<HTMLFormElement>) => {
+        setSendFormLoading(true)
         e.preventDefault();
         try {
             const body = {
@@ -73,10 +51,8 @@ export default function RegistroMascotas() {
                 "tamano": tamano,
                 "vacunado": vacunado,
                 "castrado": castrado,
-                "historia": historia,
-                "pictures": pictures
+                "historia": historia
             }
-            console.log(body)
             const settings = {
                 method: 'POST',
                 headers: {
@@ -88,35 +64,40 @@ export default function RegistroMascotas() {
 
             const res = await fetch(`${url.url}/api/registroMascotas`, settings)
             const data = await res.json();
-            console.log(data)
-            // Assuming 'data' variable is declared somewhere
-            // setAnimals(data);
-            // setAnimalsFilter(data);
+            // Obtener el elemento input
+            const inputElement: HTMLInputElement | null = document.getElementById('foto') as HTMLInputElement;
+
+            const files = inputElement.files
+
+            if (files && files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    const file: File = files[i];
+                    const { v4: uuidv4 } = require('uuid');
+                    const imageUploaded = await uploadfile(file, uuidv4())
+                    const bodyimagens = {
+                        "idPeludo": data.idPeludo,
+                        "urlImagen": imageUploaded,
+                        "idImagen": uuidv4()
+                    }
+                    const settingsImagens = {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(bodyimagens)
+                    };
+                    const resImage = fetch(`${url.url}/api/registroMascotasImagenes`, settingsImagens)
+                    setSendFormLoading(false)
+                }
+            } else {
+                console.log('Ningún archivo seleccionado');
+            }
 
         } catch (err) {
             console.log(err);
         }
     }
-
-    const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-
-        if (files) {
-            const tempArr: Picture[] = [];
-
-            [...files].forEach((file: File) => {
-                console.log("file >>> ", file);
-
-                tempArr.push({
-                    data: file,
-                    url: URL.createObjectURL(file)
-                });
-            });
-
-            setPictures(tempArr);
-            console.log("pictures >> ", tempArr);
-        }
-    };
 
     return (
         <main className="flex flex-col items-center justify-between p-12">
@@ -216,9 +197,13 @@ export default function RegistroMascotas() {
                         <div className="mb-2 block">
                             <Label htmlFor="foto" value="Sube las fotos del peludito" />
                         </div>
-                        <FileInput onChange={handleImageUpload} id="foto" multiple />
+                        <FileInput accept="image/jpeg" id="foto" multiple />
                     </div>
-                    <Button type="submit">Registrar peludito</Button>
+                    <Button type="submit" className={`${sendFormLoading ? 'hidden' : ''}`}>Registrar peludito</Button>
+                    <Button className={`${sendFormLoading ? '' : 'hidden'}`} color="gray">
+                        <Spinner aria-label="Alternate spinner button example" size="sm" />
+                        <span className="pl-3">Cargando...</span>
+                    </Button>
                 </form>
             </div>
         </main>
