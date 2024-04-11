@@ -1718,6 +1718,10 @@ input:checked + .toggle-bg {
   cursor: wait;
 }
 
+.resize {
+  resize: both;
+}
+
 .snap-x {
   scroll-snap-type: x var(--tw-scroll-snap-strictness);
 }

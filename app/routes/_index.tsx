@@ -20,7 +20,9 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-
+  const listImages = [{
+    "imagen": "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1422023439-64f1eaf518ace.jpg?crop=1xw:0.84375xh;center,top&resize=1200:*"
+  }]
   return (
     <main>
       <div className='bg-repeat-x backgroundBanner'>
@@ -60,9 +62,7 @@ export default function Index() {
       <div className='secondSpace'>
         <h1 className={`titleLobby col-start-2 col-span-3 centerTitles p-10`}>Posibles mascotas en adopción para dueños de mascotas</h1>
       </div>
-      <div className="h-96">
-        <CarouselComponent />
-      </div>
+      <CarouselComponent listImages={listImages}/>
     </main>
   );
 }
