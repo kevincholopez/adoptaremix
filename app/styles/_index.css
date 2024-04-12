@@ -100,3 +100,8 @@ h2 {
         padding-right: 10%;
     }
 }
+
+.centerCarousel {
+    display: grid;
+    place-items: center;
+}

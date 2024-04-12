@@ -62,7 +62,9 @@ export default function Index() {
       <div className='secondSpace'>
         <h1 className={`titleLobby col-start-2 col-span-3 centerTitles p-10`}>Posibles mascotas en adopción para dueños de mascotas</h1>
       </div>
-      <CarouselComponent listImages={listImages}/>
+      <div className="h-screen w-auto lg:px-72">
+        <CarouselComponent listImages={listImages}/>
+      </div>
     </main>
   );
 }

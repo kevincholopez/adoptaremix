@@ -66,11 +66,11 @@ export default function SeleccionPet() {
         <main className="flex flex-col items-center justify-between p-12">
             <h3 className="subTitlePrincipal text-center px-6">Peludito de Adopta: </h3>
             <h1 className="titleLobby centerTitles px-6 pb-10">{pet?.nombrePeludo} </h1>
-            <div className="lg:grid lg:grid-cols-2 lg:gap-2 elevateText">
-                <div className="col-start-1 w-screen">
+            <div className="lg:grid lg:grid-cols-2 lg:gap-2 w-full elevateText">
+                <div className="lg:col-start-1 h-screen w-full">
                     <CarouselComponent listImages={petImages} />
                 </div>
-                <div className="col-start-2 w-screen">
+                <div className="lg:col-start-2 w-full">
                     <Tabs className="" aria-label="Pills" style="pills">
                         <Tabs.Item active title="Descripción">
                             <p className="font-medium textPrincipal p-4">Edad:
