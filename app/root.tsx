@@ -11,6 +11,7 @@ import styles from '~/styles/style.css'
 import stylesHeader from '~/styles/_header.css'
 import Header from '~/shared/components/header/header'
 import Footer from '~/shared/components/footer/footer'
+import { Analytics } from "@vercel/analytics/react"
 
 export const links:LinksFunction = () => {
   return [
@@ -35,6 +36,7 @@ export default function App() {
         <Scripts />
         <LiveReload />
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

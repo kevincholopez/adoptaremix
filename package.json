@@ -18,6 +18,7 @@
     "@remix-run/react": "^2.6.0",
     "@remix-run/serve": "^2.6.0",
     "@types/react-dropzone": "^5.1.0",
+    "@vercel/analytics": "^1.2.2",
     "autoprefixer": "^10.4.17",
     "basic-ftp": "^5.0.5",
     "concurrently": "^8.2.2",
