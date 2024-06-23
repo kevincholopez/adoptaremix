@@ -34,7 +34,7 @@ export default function login() {
 
     useEffect(() => {
         if (localStorage.getItem('userLogin') !== undefined && localStorage.getItem('userLogin') !== null) {
-            navigate('/registroMascotas')
+            navigate('/homeIn')
         }
         // if (animals.length <= 0) {
         //     obtenerPeluditos()
@@ -65,7 +65,7 @@ export default function login() {
                 setColorPassword("gray")
                 setMesUser(false)
                 setMesPassword(false)
-                navigate('/registroMascotas')
+                navigate('/homeIn')
             } else if (data.code == 400) {
                 setShowLoading(false)
                 setColorPassword("failure")

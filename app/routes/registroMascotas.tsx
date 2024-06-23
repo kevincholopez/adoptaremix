@@ -19,6 +19,7 @@ interface PictureInterfaz {
 }
 
 export default function RegistroMascotas() {
+    const [idPeludo, setIdPeludo] = useState('');
     const [name, setName] = useState('');
     const [raza, setRaza] = useState('');
     const [edad, setEdad] = useState(0);
@@ -31,39 +32,97 @@ export default function RegistroMascotas() {
     const [castrado, setCastrado] = useState('');
     const [historia, setHistoria] = useState('');
     const [sendFormLoading, setSendFormLoading] = useState(false)
+    const [dataActualizada, setDataActualizada] = useState(false);
 
     useEffect(() => {
         // console.log(foto)
+        const petSelected = new URLSearchParams(location.search).get("idPeludo");
+        if (petSelected != null && !dataActualizada) {
+            obtenerPeluditos();
+        }
     })
+
+    const obtenerPeluditos = async () => {
+        const petSelected = new URLSearchParams(location.search).get("idPeludo");
+        try {
+            const res = await fetch(`${url.url}/api/EnAdopcion?petSelected=${petSelected}`)
+            const data = await res.json();
+            setIdPeludo(data[0].idPeludo)
+            setName(data[0].nombrePeludo)
+            setRaza(data[0].raza)
+            setEdad(data[0].edad)
+            setContacto(data[0].contacto)
+            setTipoPeludito(data[0].categoria)
+            setSexo(data[0].sexo)
+            setColor(data[0].color)
+            setTamano(data[0].tamano)
+            setCastrado(data[0].castrado)
+            setVacunado(data[0].vacunado)
+            setHistoria(data[0].historia)
+            setDataActualizada(true)
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     const sendForm = async (e: React.FormEvent<HTMLFormElement>) => {
         setSendFormLoading(true)
         e.preventDefault();
         try {
-            const body = {
-                "name": name,
-                "raza": raza,
-                "edad": edad,
-                "contacto": contacto,
-                "tipoPeludito": tipoPeludito,
-                "sexo": sexo,
-                "color": color,
-                "tamano": tamano,
-                "vacunado": vacunado,
-                "castrado": castrado,
-                "historia": historia
+            const petSelected = new URLSearchParams(location.search).get("idPeludo");
+            let data = null;
+            if (petSelected == null) {
+                const body = {
+                    "name": name,
+                    "raza": raza,
+                    "edad": edad,
+                    "contacto": contacto,
+                    "tipoPeludito": tipoPeludito,
+                    "sexo": sexo,
+                    "color": color,
+                    "tamano": tamano,
+                    "vacunado": vacunado,
+                    "castrado": castrado,
+                    "historia": historia
+                }
+                const settings = {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(body)
+                };
+    
+                const res = await fetch(`${url.url}/api/registroMascotas`, settings)
+                data = await res.json();
+            } else {
+                const body = {
+                    "idPeludo": idPeludo,
+                    "name": name,
+                    "raza": raza,
+                    "edad": edad,
+                    "contacto": contacto,
+                    "tipoPeludito": tipoPeludito,
+                    "sexo": sexo,
+                    "color": color,
+                    "tamano": tamano,
+                    "vacunado": vacunado,
+                    "castrado": castrado,
+                    "historia": historia
+                }
+                const settings = {
+                    method: 'PUT',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(body)
+                };
+    
+                const res = await fetch(`${url.url}/api/actualizarMascota`, settings)
+                data = await res.json();
             }
-            const settings = {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(body)
-            };
-
-            const res = await fetch(`${url.url}/api/registroMascotas`, settings)
-            const data = await res.json();
             // Obtener el elemento input
             const inputElement: HTMLInputElement | null = document.getElementById('foto') as HTMLInputElement;
 
@@ -93,6 +152,7 @@ export default function RegistroMascotas() {
             } else {
                 console.log('Ningún archivo seleccionado');
             }
+            window.location.href = '/tablaMascotas'
 
         } catch (err) {
             console.log(err);

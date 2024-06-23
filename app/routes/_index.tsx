@@ -20,9 +20,11 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const listImages = [{
-    "imagen": "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1422023439-64f1eaf518ace.jpg?crop=1xw:0.84375xh;center,top&resize=1200:*"
-  }]
+  const listImages = [
+    {"imagen": "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1422023439-64f1eaf518ace.jpg?crop=1xw:0.84375xh;center,top&resize=1200:*"},
+    {"imagen": "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1422023439-64f1eaf518ace.jpg?crop=1xw:0.84375xh;center,top&resize=1200:*"},
+    {"imagen": "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1422023439-64f1eaf518ace.jpg?crop=1xw:0.84375xh;center,top&resize=1200:*"}
+  ]
   return (
     <main>
       <div className='bg-repeat-x backgroundBanner'>
